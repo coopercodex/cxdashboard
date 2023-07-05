@@ -1,5 +1,5 @@
 "use client"
-import { Avatar } from '@mui/material'
+import { Avatar, useMediaQuery } from '@mui/material'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import React from 'react'
 import AppBar from '@mui/material/AppBar';
@@ -14,14 +14,20 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import ThemeToggleButton from '../ThemeToggleButton/ThemeToggleButton';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Header = () => {
+export type HeaderProps ={
+  ColorModeContext: React.Context<{toggleColorMode: () => void; }>
+}
+
+const Header = (props: HeaderProps) => {
+  const {ColorModeContext} = props
   const { data: session } = useSession()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const mobile = useMediaQuery('(min-width: 800px)')
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -58,7 +64,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            CodeXAnalytics
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -114,7 +120,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            CodeXAnalytics
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -128,10 +134,11 @@ const Header = () => {
             ))}
           </Box>
           <Box sx={{ paddingRight: 2 }}>
-            {session && 
-            <Typography>Signed in as {session?.user?.name}</Typography>
+            {session && mobile ?  
+            <Typography>Signed in as {session?.user?.name}</Typography> : null
             }
           </Box>
+            <ThemeToggleButton ColorModeContext={ColorModeContext} />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Profile settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
