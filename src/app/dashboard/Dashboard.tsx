@@ -1,13 +1,27 @@
+import { Grid, Paper } from '@mui/material'
+import { Box } from '@mui/system'
 import React from 'react'
-import Analytics from './analytics/Analytics'
-import Profile from './profile/Profile'
+import scss from './Dashboard.module.scss'
 
 
 const Dashboard = () => {
   return (
-    <div>
-      <h1>Dashboardie</h1>
-    </div>
+    <Box>
+      <Grid container gap={2} className={scss.topCardsContainer}>
+        <Grid>
+          <Paper className={scss.dataCard}>xs=4</Paper>
+        </Grid>
+        <Grid>
+          <Paper className={scss.dataCard}>xs=4</Paper>
+        </Grid>
+        <Grid>
+          <Paper className={scss.dataCard}>xs=4</Paper>
+        </Grid>
+      </Grid>
+      <Grid xs={12} marginY={2}>
+        <Paper className={scss.dataCard}>xs=12</Paper>
+      </Grid>
+    </Box>
   )
 }
 
